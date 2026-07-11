@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard - Fake Profile Detection System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    
+    <!-- Welcome Header Banner -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-card p-4 d-flex align-items-center justify-content-between" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(17, 24, 39, 0.7) 100%);">
+                <div>
+                    <h3 class="fw-bold text-white mb-1"><i class="fa-solid fa-hand-wave text-warning me-2"></i>Welcome, @{{ current_user.username }}!</h3>
+                    <p class="text-secondary mb-0">Use the analyzer below to evaluate profile details and flags against our Machine Learning model.</p>
+                </div>
+                <div class="d-none d-md-block text-end">
+                    <span class="text-secondary small">Session started: {{ datetime }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards Summary Row -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="glass-card stat-card primary-card">
+                <div class="icon-box"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h3>{{ total_preds }}</h3>
+                <p>Total Profiles Evaluated</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card stat-card danger-card">
+                <div class="icon-box"><i class="fa-solid fa-user-xmark"></i></div>
+                <h3>{{ fake_count }}</h3>
+                <p>Fake Profiles Detected</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card stat-card success-card">
+                <div class="icon-box"><i class="fa-solid fa-user-check"></i></div>
+                <h3>{{ genuine_count }}</h3>
+                <p>Genuine Profiles Confirmed</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Workspace Split Grid -->
+    <div class="row g-4">
+        
+        <!-- Left Column: Prediction Form -->
+        <div class="col-lg-7">
+            <div class="glass-card p-4">
+                <h4 class="fw-bold text-white mb-4"><i class="fa-solid fa-square-poll-horizontal text-indigo me-2"></i>Profile Analysis Parameters</h4>
+                
+                <form id="predictForm" method="POST">
+                    
+                    <div class="row g-3">
+                        <!-- Profile Username -->
+                        <div class="col-md-6">
+                            <label for="username" class="form-label form-label-custom">Target Username</label>
+                            <input type="text" class="form-control form-control-custom" id="username" name="username" placeholder="e.g. spammer_bot_99" required>
+                        </div>
+                        
+                        <!-- Account Age -->
+                        <div class="col-md-6">
+                            <label for="account_age_days" class="form-label form-label-custom">Account Age (Days)</label>
+                            <input type="number" class="form-control form-control-custom" id="account_age_days" name="account_age_days" min="0" placeholder="e.g. 150" required>
+                        </div>
+                        
+                        <!-- Followers Count -->
+                        <div class="col-md-4">
+                            <label for="followers" class="form-label form-label-custom">Followers Count</label>
+                            <input type="number" class="form-control form-control-custom" id="followers" name="followers" min="0" placeholder="0" required>
+                        </div>
+                        
+                        <!-- Following Count -->
+                        <div class="col-md-4">
+                            <label for="following" class="form-label form-label-custom">Following Count</label>
+                            <input type="number" class="form-control form-control-custom" id="following" name="following" min="0" placeholder="0" required>
+                        </div>
+                        
+                        <!-- Posts Count -->
+                        <div class="col-md-4">
+                            <label for="posts" class="form-label form-label-custom">Number of Posts</label>
+                            <input type="number" class="form-control form-control-custom" id="posts" name="posts" min="0" placeholder="0" required>
+                        </div>
+
+                        <!-- Bio Length -->
+                        <div class="col-md-6">
+                            <label for="bio_length" class="form-label form-label-custom">Biography Description Length (Chars)</label>
+                            <input type="number" class="form-control form-control-custom" id="bio_length" name="bio_length" min="0" placeholder="e.g. 45" required>
+                        </div>
+
+                        <!-- Engagement Rate -->
+                        <div class="col-md-6">
+                            <label for="engagement_rate" class="form-label form-label-custom">Engagement Rate (%)</label>
+                            <input type="number" step="0.01" class="form-control form-control-custom" id="engagement_rate" name="engagement_rate" min="0" max="100" placeholder="e.g. 2.45" required>
+                        </div>
+
+                        <hr class="my-4 border-secondary opacity-25">
+
+                        <!-- Toggle Switches Row -->
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="has_profile_pic" name="has_profile_pic" value="1" checked>
+                                <label class="form-check-label text-secondary small ms-2" for="has_profile_pic">Has Profile Picture</label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="is_verified" name="is_verified" value="1">
+                                <label class="form-check-label text-secondary small ms-2" for="is_verified">Account is Verified (Badge)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="has_external_url" name="has_external_url" value="1">
+                                <label class="form-check-label text-secondary small ms-2" for="has_external_url">Contains External Website Link</label>
+                            </div>
+                            
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="is_private" name="is_private" value="1">
+                                <label class="form-check-label text-secondary small ms-2" for="is_private">Private Account</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary-custom w-100 py-3 mt-4"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Evaluate Profile Integrity</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Results Section -->
+        <div class="col-lg-5">
+            <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <h4 class="fw-bold text-white mb-3"><i class="fa-solid fa-square-poll-vertical text-info me-2"></i>Evaluation Result</h4>
+                    <p class="text-secondary small mb-4">Results will appear here dynamically after executing analysis.</p>
+                </div>
+                
+                <!-- Display Area -->
+                <div id="resultBox" class="result-box text-center flex-grow-1 d-flex flex-column justify-content-center py-5" style="display: none !important;">
+                    <div id="resultBadge" class="mb-3"></div>
+                    
+                    <h5 class="text-white mb-2">Confidence Score: <span id="resultConfidence" class="fw-bold text-indigo">0.0%</span></h5>
+                    
+                    <div class="confidence-bar-container">
+                        <div id="resultBar" class="confidence-bar"></div>
+                    </div>
+                    
+                    <div class="p-3 bg-dark rounded border border-secondary border-opacity-25 mt-3 text-start">
+                        <h6 class="text-white small fw-bold mb-2"><i class="fa-solid fa-list-check me-2"></i>Key Justification Notes:</h6>
+                        <p id="resultReason" class="text-secondary small mb-0"></p>
+                    </div>
+                </div>
+                
+                <!-- Placeholder when empty -->
+                <div id="resultPlaceholder" class="text-center py-5 my-auto text-secondary">
+                    <i class="fa-solid fa-circle-question fs-1 mb-3 opacity-25"></i>
+                    <p class="mb-0 small">Waiting for profile inputs...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section: History List -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                    <h4 class="fw-bold text-white mb-0"><i class="fa-solid fa-history text-indigo me-2"></i>Your Assessment History</h4>
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                        <!-- Search Username -->
+                        <div class="input-group input-group-sm" style="width: 240px;">
+                            <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-search"></i></span>
+                            <input type="text" id="searchPredictInput" class="form-control form-control-custom py-1" placeholder="Search target user...">
+                        </div>
+                        
+                        <!-- Filter Results -->
+                        <select id="filterPredictSelect" class="form-select form-select-sm form-control-custom py-1" style="width: 140px;">
+                            <option value="all">Show All</option>
+                            <option value="fake">Fake Only</option>
+                            <option value="genuine">Genuine Only</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table custom-table text-start">
+                        <thead>
+                            <tr>
+                                <th>Target Username</th>
+                                <th>Prediction Result</th>
+                                <th>Confidence</th>
+                                <th>Classification Justification</th>
+                                <th>Assessment Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            {% for p in recent_predictions %}
+                                <tr>
+                                    <td><strong>@{{ p.username }}</strong></td>
+                                    <td>
+                                        {% if p.prediction_result == 'Fake' %}
+                                            <span class="badge-fake">FAKE</span>
+                                        {% else %}
+                                            <span class="badge-genuine">GENUINE</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ "%.2f"|format(p.confidence_score * 100) }}%</td>
+                                    <td><small class="text-secondary">{{ p.reason }}</small></td>
+                                    <td>{{ p.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr class="empty-row text-center">
+                                    <td colspan="5" class="py-4 text-secondary">
+                                        <i class="fa-solid fa-folder-open fs-3 mb-2 opacity-50"></i><br>
+                                        No recent predictions found. Try submitting profile details above!
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Show result container and hide placeholder when result loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const predictForm = document.getElementById('predictForm');
+        const placeholder = document.getElementById('resultPlaceholder');
+        const resultBox = document.getElementById('resultBox');
+        
+        if (predictForm) {
+            predictForm.addEventListener('submit', function() {
+                placeholder.style.setProperty('display', 'none', 'important');
+                resultBox.style.display = 'flex';
+            });
+        }
+    });
+</script>
+{% endblock %}

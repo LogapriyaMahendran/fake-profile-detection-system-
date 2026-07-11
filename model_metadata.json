@@ -1,0 +1,57 @@
+{
+    "accuracy": 1.0,
+    "confusion_matrix": [
+        [
+            120,
+            0
+        ],
+        [
+            0,
+            120
+        ]
+    ],
+    "classification_report": {
+        "0": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 120.0
+        },
+        "1": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 120.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 240.0
+        },
+        "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 240.0
+        }
+    },
+    "feature_importances": {
+        "bio_length": 0.23630299392665716,
+        "followers": 0.19925622195365053,
+        "posts": 0.18720942217800587,
+        "account_age_days": 0.17000000000000004,
+        "engagement_rate": 0.13303117884982785,
+        "following": 0.02955095996834493,
+        "has_profile_pic": 0.029343909158306272,
+        "username_has_digits": 0.009030165033889781,
+        "username_length": 0.006109587477083626,
+        "is_private": 0.00012396557479104868,
+        "is_verified": 4.159587944304151e-05,
+        "has_external_url": 0.0
+    },
+    "dataset_size": 1200,
+    "fake_count": 600,
+    "genuine_count": 600
+}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Fake Profile Detection System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    
+    <!-- Header with export options -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-card p-4 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div>
+                    <h3 class="fw-bold text-white mb-1"><i class="fa-solid fa-file-invoice text-indigo me-2"></i>Analytics & Audit Reports</h3>
+                    <p class="text-secondary mb-0">Review system activity records and export comprehensive evaluation data logs.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('export_report', format_type='csv') }}" class="btn btn-secondary-custom btn-sm py-2 px-3 text-white fw-bold" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3);"><i class="fa-solid fa-file-csv me-2 text-success"></i>Export CSV</a>
+                    <a href="{{ url_for('export_report', format_type='json') }}" class="btn btn-secondary-custom btn-sm py-2 px-3 text-white fw-bold" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);"><i class="fa-solid fa-file-code me-2 text-primary"></i>Export JSON</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tables division -->
+    <div class="row">
+        <div class="col-12">
+            <div class="glass-card p-4">
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs border-secondary border-opacity-25 mb-4" id="reportTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-white fw-bold px-4 py-2 border-0 bg-transparent" id="predictions-tab" data-bs-toggle="tab" data-bs-target="#predictions" type="button" role="tab" aria-controls="predictions" aria-selected="true" style="border-bottom: 3px solid var(--primary) !important;">
+                            <i class="fa-solid fa-chart-column me-2 text-indigo"></i>Prediction History Logs
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-white fw-bold px-4 py-2 border-0 bg-transparent" id="logins-tab" data-bs-toggle="tab" data-bs-target="#logins" type="button" role="tab" aria-controls="logins" aria-selected="false">
+                            <i class="fa-solid fa-shield-halved me-2 text-info"></i>Login Audit Logs
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="reportTabsContent">
+                    
+                    <!-- 1. Predictions Table -->
+                    <div class="tab-pane fade show active" id="predictions" role="tabpanel" aria-labelledby="predictions-tab">
+                        <div class="table-responsive">
+                            <table class="table custom-table text-start">
+                                <thead>
+                                    <tr>
+                                        <th>Target Profile</th>
+                                        <th>Followers</th>
+                                        <th>Following</th>
+                                        <th>Posts</th>
+                                        <th>Age (Days)</th>
+                                        <th>Result</th>
+                                        <th>Confidence</th>
+                                        <th>Assessment Justification</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in predictions %}
+                                        <tr>
+                                            <td><strong>@{{ p.username }}</strong></td>
+                                            <td>{{ p.followers }}</td>
+                                            <td>{{ p.following }}</td>
+                                            <td>{{ p.posts }}</td>
+                                            <td>{{ p.account_age_days }}</td>
+                                            <td>
+                                                {% if p.prediction_result == 'Fake' %}
+                                                    <span class="badge-fake">FAKE</span>
+                                                {% else %}
+                                                    <span class="badge-genuine">GENUINE</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ "%.2f"|format(p.confidence_score * 100) }}%</td>
+                                            <td><small class="text-secondary">{{ p.reason }}</small></td>
+                                            <td>{{ p.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="9" class="text-center py-4 text-secondary">
+                                                <i class="fa-solid fa-folder-open fs-2 mb-2 opacity-50"></i><br>No prediction records found.
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. Logins Table -->
+                    <div class="tab-pane fade" id="logins" role="tabpanel" aria-labelledby="logins-tab">
+                        <div class="table-responsive">
+                            <table class="table custom-table text-start">
+                                <thead>
+                                    <tr>
+                                        <th>Username Logged</th>
+                                        <th>Role Type</th>
+                                        <th>IP Address</th>
+                                        <th>Authentication Status</th>
+                                        <th>Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for log in logins %}
+                                        <tr>
+                                            <td>{{ log.username }}</td>
+                                            <td>
+                                                {% if log.user_type == 'Admin' %}
+                                                    <span class="badge bg-info text-dark">Admin</span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary">User</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ log.ip_address }}</td>
+                                            <td>
+                                                {% if log.status == 'Success' %}
+                                                    <span class="text-success"><i class="fa-solid fa-circle-check me-1"></i>Success</span>
+                                                {% else %}
+                                                    <span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Failed</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ log.login_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5" class="text-center py-4 text-secondary">
+                                                <i class="fa-solid fa-folder-open fs-2 mb-2 opacity-50"></i><br>No login logs found.
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Tab indicator styling transitions
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('#reportTabs button');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('shown.bs.tab', function(e) {
+                // Remove style from all
+                tabButtons.forEach(b => b.style.setProperty('border-bottom', 'none', 'important'));
+                // Add to active
+                e.target.style.setProperty('border-bottom', '3px solid var(--primary)', 'important');
+            });
+        });
+    });
+</script>
+{% endblock %}

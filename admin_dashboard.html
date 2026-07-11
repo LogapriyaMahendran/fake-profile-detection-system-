@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Fake Profile Detection System{% endblock %}
+
+{% block content %}
+<div class="container-fluid" id="adminAnalyticsMarker">
+    
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-card p-4 d-flex align-items-center justify-content-between" style="border-color: rgba(6, 182, 212, 0.2); background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(17, 24, 39, 0.7) 100%);">
+                <div>
+                    <h3 class="fw-bold text-white mb-1"><i class="fa-solid fa-user-gear text-info me-2"></i>Admin Control Panel</h3>
+                    <p class="text-secondary mb-0">Monitor platform activities, visualize model performance, upload files, and trigger retraining scripts.</p>
+                </div>
+                <div class="text-end">
+                    <span class="badge bg-info text-dark px-3 py-2 fw-bold">Admin Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat Grid -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card primary-card">
+                <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+                <h3>{{ total_users }}</h3>
+                <p>Total Users</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card warning-card">
+                <div class="icon-box"><i class="fa-solid fa-search"></i></div>
+                <h3>{{ total_predictions }}</h3>
+                <p>Total Queries</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card danger-card">
+                <div class="icon-box"><i class="fa-solid fa-user-xmark"></i></div>
+                <h3>{{ fake_count }}</h3>
+                <p>Fakes Blocked</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card success-card">
+                <div class="icon-box"><i class="fa-solid fa-user-check"></i></div>
+                <h3>{{ genuine_count }}</h3>
+                <p>Genuines Verified</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card info-card" style="border-color: rgba(6, 182, 212, 0.2);">
+                <div class="icon-box" style="background: rgba(6, 182, 212, 0.15); color: var(--info);"><i class="fa-solid fa-brain"></i></div>
+                <h3>{{ accuracy }}</h3>
+                <p>Model Accuracy</p>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="glass-card stat-card" style="border-color: rgba(255, 255, 255, 0.08);">
+                <div class="icon-box" style="background: rgba(255, 255, 255, 0.05); color: #fff;"><i class="fa-solid fa-database"></i></div>
+                <h3>{{ dataset_size }}</h3>
+                <p>Dataset Rows</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Charts Grid -->
+    <div class="row g-4 mb-4">
+        <!-- 1. Pie/Doughnut Chart (Fake vs Genuine) -->
+        <div class="col-lg-4">
+            <div class="glass-card p-4 h-100">
+                <h5 class="fw-bold text-white mb-4"><i class="fa-solid fa-chart-pie me-2 text-danger"></i>Inference Distribution</h5>
+                <div style="height: 250px; position: relative;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2. Line Chart (Monthly predictions over time) -->
+        <div class="col-lg-8">
+            <div class="glass-card p-4 h-100">
+                <h5 class="fw-bold text-white mb-4"><i class="fa-solid fa-chart-line me-2 text-success"></i>Monthly Inferences Analytics</h5>
+                <div style="height: 250px; position: relative;">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Horizontal Bar Chart (Feature Importance) -->
+        <div class="col-lg-12">
+            <div class="glass-card p-4">
+                <h5 class="fw-bold text-white mb-4"><i class="fa-solid fa-bars-progress me-2 text-primary"></i>Model Feature Importance Metrics</h5>
+                <div style="height: 300px; position: relative;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Admin Activities & Controls Split Layout -->
+    <div class="row g-4">
+        
+        <!-- Left: Activity and Login logs -->
+        <div class="col-lg-8">
+            <div class="glass-card p-4 mb-4">
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-list-check me-2 text-indigo"></i>Recent User Inferences</h5>
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Target Username</th>
+                                <th>Prediction</th>
+                                <th>Confidence</th>
+                                <th>Assessment Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in recent_predictions %}
+                                <tr>
+                                    <td><strong>@{{ p.username }}</strong></td>
+                                    <td>
+                                        {% if p.prediction_result == 'Fake' %}
+                                            <span class="badge-fake">FAKE</span>
+                                        {% else %}
+                                            <span class="badge-genuine">GENUINE</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ "%.2f"|format(p.confidence_score * 100) }}%</td>
+                                    <td>{{ p.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-3 text-secondary small">No user history found.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="glass-card p-4">
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-info"></i>Recent Login Logs</h5>
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Portal</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                                <th>Login Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in recent_logins %}
+                                <tr>
+                                    <td>{{ log.username }}</td>
+                                    <td>
+                                        {% if log.user_type == 'Admin' %}
+                                            <span class="badge bg-info text-dark">Admin</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">User</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ log.ip_address }}</td>
+                                    <td>
+                                        {% if log.status == 'Success' %}
+                                            <span class="text-success"><i class="fa-solid fa-circle-check me-1"></i>Success</span>
+                                        {% else %}
+                                            <span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>Failed</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ log.login_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-3 text-secondary small">No logs recorded.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Dataset Upload & Training Widget -->
+        <div class="col-lg-4">
+            <div class="glass-card p-4 mb-4">
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-upload me-2 text-warning"></i>Retrain Classifier Model</h5>
+                <p class="text-secondary small">Upload a structured dataset (.csv) to dynamically retrain the Random Forest model and update accuracy stats.</p>
+                
+                <div class="alert alert-warning border-0 p-3 mb-4" style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--warning) !important;">
+                    <h6 class="fw-bold text-warning mb-1 small"><i class="fa-solid fa-circle-exclamation me-1"></i>CSV Columns Required:</h6>
+                    <p class="text-secondary small mb-0" style="font-size: 0.75rem; line-height: 1.4;">
+                        <code>username_length</code>, <code>username_has_digits</code>, <code>followers</code>, <code>following</code>, <code>posts</code>, <code>bio_length</code>, <code>has_profile_pic</code>, <code>is_verified</code>, <code>has_external_url</code>, <code>is_private</code>, <code>account_age_days</code>, <code>engagement_rate</code>, <code>is_fake</code>
+                    </p>
+                </div>
+
+                <form action="{{ url_for('admin_upload_dataset') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="dataset_file" class="form-label form-label-custom">Select CSV File</label>
+                        <input class="form-control form-control-custom" type="file" id="dataset_file" name="dataset_file" accept=".csv" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 py-2"><i class="fa-solid fa-gears me-2"></i>Upload & Retrain</button>
+                </form>
+            </div>
+
+            <div class="glass-card p-4">
+                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-database me-2 text-indigo"></i>Dataset Training Logs</h5>
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0 text-start" style="font-size: 0.85rem;">
+                        <thead>
+                            <tr>
+                                <th>Dataset</th>
+                                <th>Rows</th>
+                                <th>Model Acc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in recent_datasets %}
+                                <tr>
+                                    <td><small class="text-white">{{ d.file_name }}</small></td>
+                                    <td>{{ d.row_count }}</td>
+                                    <td><span class="text-success fw-bold">{{ "%.2f"|format(d.model_accuracy * 100) }}%</span></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-3 text-secondary small">No training uploads yet.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}User Login - Fake Profile Detection System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5">
+        <div class="glass-card p-5">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-lock text-indigo mb-3" style="font-size: 3rem; color: var(--primary);"></i>
+                <h3 class="fw-bold text-white">User Sign In</h3>
+                <p class="text-secondary small">Access the fake profile verification dashboard</p>
+            </div>
+            
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="mb-4">
+                    <label for="username_or_email" class="form-label form-label-custom">Username or Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" class="form-control form-control-custom" id="username_or_email" name="username_or_email" placeholder="Enter username or email" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label form-label-custom">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-key"></i></span>
+                        <input type="password" class="form-control form-control-custom" id="password" name="password" placeholder="Enter password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary-custom w-100 py-3 mb-3"><i class="fa-solid fa-right-to-bracket me-2"></i>Authenticate</button>
+                
+                <div class="text-center mt-3">
+                    <p class="text-secondary small mb-2">New user? <a href="{{ url_for('register') }}" class="text-indigo text-decoration-none" style="color: var(--primary);">Register here</a></p>
+                    <p class="text-secondary small mb-0">Are you an administrator? <a href="{{ url_for('admin_login') }}" class="text-info text-decoration-none">Admin Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

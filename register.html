@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}User Registration - Fake Profile Detection System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5">
+        <div class="glass-card p-5">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-user-plus text-indigo mb-3" style="font-size: 3rem; color: var(--primary);"></i>
+                <h3 class="fw-bold text-white">Create Account</h3>
+                <p class="text-secondary small">Register to start evaluating social media accounts</p>
+            </div>
+            
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label form-label-custom">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-user-tag"></i></span>
+                        <input type="text" class="form-control form-control-custom" id="username" name="username" placeholder="Choose a username" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label form-label-custom">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-envelope"></i></span>
+                        <input type="email" class="form-control form-control-custom" id="email" name="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label form-label-custom">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-key"></i></span>
+                        <input type="password" class="form-control form-control-custom" id="password" name="password" placeholder="Create a strong password" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="confirm_password" class="form-label form-label-custom">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-secondary border-0 text-secondary"><i class="fa-solid fa-check-double"></i></span>
+                        <input type="password" class="form-control form-control-custom" id="confirm_password" name="confirm_password" placeholder="Repeat your password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary-custom w-100 py-3 mb-3"><i class="fa-solid fa-user-check me-2"></i>Create Account</button>
+                
+                <div class="text-center mt-3">
+                    <p class="text-secondary small mb-0">Already registered? <a href="{{ url_for('login') }}" class="text-indigo text-decoration-none" style="color: var(--primary);">Sign In here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
