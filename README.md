@@ -4,9 +4,9 @@ An ML-powered web application that detects fake/bot social media profiles using 
 
 ## 🌐 Live Demo
 
-The application is deployed and available online:
+🚀 Try the live application here:
 
-[Live Demo](YOUR_RENDER_LINK)
+👉 [Fake Profile Detection System - Live Demo](https://fake-profile-detection-system-2.onrender.com/)
 
 ## 🚀 Features
 
