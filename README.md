@@ -124,18 +124,31 @@ Additional detailed documentation is available in the `docs/` folder:
 
 ## 🖼️ Screenshots
 
-Screenshots of the application are available in the [`screenshots/`](screenshots/) folder:
+The application interface and prediction workflow are shown below.
 
-| Screenshot | Description |
-|------------|--------------|
-| ![Login Page](screenshots/login_page.png) | Login page |
-| ![Registration Page](screenshots/registration_page.png) | Registration page |
-| ![Dashboard](screenshots/dashboard.png) | Dashboard |
-| ![Fake Prediction Result](screenshots/fake_result.png) | Fake prediction result |
-| ![Genuine Prediction Result](screenshots/genuine_result.png) | Genuine prediction result |
-| ![Analytics Reports](screenshots/analytics_reports.png) | Analytics reports |
-| ![CSV/JSON Export](screenshots/export.png) | CSV/JSON export |
+### 🔐 User Login
+![User Login](user_login.png.png)
 
+### 📝 User Registration
+![User Registration](user_registration.png.png)
+
+### 📊 Dashboard
+![Dashboard](dashboard.png.png)
+
+### 🕵️ Fake Profile Prediction
+![Fake Profile Prediction](fake_profile.png.png)
+
+### ✅ Genuine Profile Prediction
+![Genuine Profile Prediction](genuine_profile.png.png)
+
+### 🔍 Profile Analysis
+![Profile Analysis](profile_analysis.png.png)
+
+### 📈 Analytics Dashboard
+![Analytics Dashboard](analytics_dashboard.png.png)
+
+### ⚙️ Account Settings
+![Account Settings](account_settings.png.png)
 > Update the image filenames above to match the actual files in your `screenshots/` folder.
 
 ## 📈 Results
