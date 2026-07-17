@@ -1,173 +1,157 @@
-# Intelligent Fake Social Media Profile Detection System
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![Flask](https://img.shields.io/badge/Flask-Web%20Framework-black)
-![Machine Learning](https://img.shields.io/badge/Machine-Learning-green)
-![Random Forest](https://img.shields.io/badge/Algorithm-Random%20Forest-orange)
-![MySQL](https://img.shields.io/badge/Database-MySQL-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+# Fake Profile Detection
 
-## 🎯 Project Overview
+An ML-powered web application that detects fake/bot social media profiles using machine learning, built with Python and Flask.
 
-The Intelligent Fake Social Media Profile Detection System is a Machine Learning-based web application that detects whether a social media profile is **Fake** or **Genuine**. The system uses a trained Random Forest Classifier to analyze profile attributes and generate accurate predictions in real time.
+## 🌐 Live Demo
 
-### 🎯 Model Accuracy
-## ✨ Key Features
-## 🛠️ Technology Stack
-## 🚀 Installation
-## 📸 Project Screenshots
+The application is deployed and available online:
 
-| Page | Preview |
-|------|---------|
-| Home Page | Add Screenshot Here |
-| Login Page | Add Screenshot Here |
-| User Dashboard | Add Screenshot Here |
-| Admin Dashboard | Add Screenshot Here |
-| Prediction Result | Add Screenshot Here |
+[Live Demo](YOUR_RENDER_LINK)
 
----
+## 🚀 Features
 
-## 👩‍💻 Author
+- Machine learning model to classify social media profiles as **genuine** or **fake**
+- Web interface built with Flask for easy interaction
+- Trainable model pipeline using labeled social media profile data
+- SQL database integration for storing profile data and predictions
+- REST-style API endpoints for integration with other services
+- Detailed project documentation included in the `docs/` folder
 
-**Name:** M. Logapriya
+## 🛠️ Tech Stack
 
-**College:** V.S.B Engineering College
+- **Backend:** Python, Flask
+- **Machine Learning:** Python, scikit-learn, Random Forest Classifier
+- **Database:** SQLite (`fake_profile.db`) with schema in `database.sql`
+- **Frontend:** HTML, CSS, JavaScript (`templates/`, `static/`)
+- **Data:** `social_media_profiles.csv`
 
-**Project:** Intelligent Fake Social Media Profile Detection System Using Machine Learning
+## 📁 Project Structure
 
----
+```
+fake-profile-detection-system-/
+├── app.py                     # Main Flask application
+├── config.py                  # Configuration settings
+├── train_model.py             # Script to train the ML model
+├── database.sql                # Database schema
+├── fake_profile.db             # SQLite database
+├── requirements.txt            # Python dependencies
+├── social_media_profiles.csv   # Dataset used for training
+├── models/                     # Saved/trained ML models
+├── static/
+│   ├── css/                    # Stylesheets
+│   └── js/                     # Client-side scripts
+├── templates/                  # HTML templates
+├── uploads/                    # Uploaded files/data
+├── screenshots/                # App screenshots
+└── docs/
+    ├── api_documentation.md
+    ├── deployment_guide.md
+    ├── installation_guide.md
+    ├── project_documentation.md
+    ├── testing_report.md
+    ├── user_manual.md
+    └── diagrams/
+```
 
-## 🔮 Future Enhancements
+## ⚙️ Installation
 
-- Deep Learning based Fake Profile Detection
-- Real-time Social Media API Integration
-- Mobile Application Support
-- Email Notification System
-- Multi-language Support
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/fake-profile-detection-system-.git
+   cd fake-profile-detection-system-
+   ```
 
----
+2. **Create a virtual environment** (recommended)
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate      # Windows
+   source venv/bin/activate   # macOS/Linux
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up the database**
+   ```bash
+   # Run database.sql against your SQLite/DB setup, or let app.py initialize it
+   ```
+
+5. **Train the model** (if not already trained)
+   ```bash
+   python train_model.py
+   ```
+
+6. **Run the application**
+   ```bash
+   python app.py
+   ```
+
+7. Open your browser and go to `http://localhost:5000`
+
+For detailed steps, see [`docs/installation_guide.md`](docs/installation_guide.md).
+
+## 🧠 Usage
+
+1. Launch the Flask app using `python app.py`
+2. Upload or input social media profile data through the web interface
+3. The trained ML model analyzes the profile and predicts whether it's **fake** or **genuine**
+4. Results are displayed on the web page and optionally stored in the database
+
+For full usage instructions, see [`docs/user_manual.md`](docs/user_manual.md).
+
+## 🚀 Deployment
+
+The application is deployed using Render. The Flask backend serves the web application and handles machine learning predictions, database operations, authentication, and report generation.
+
+## 📊 Dataset
+
+The model is trained using `social_media_profiles.csv`, which contains labeled profile data used to distinguish genuine accounts from fake/bot accounts.
+
+## 📚 Documentation
+
+Additional detailed documentation is available in the `docs/` folder:
+
+| File | Description |
+|------|-------------|
+| `installation_guide.md` | Step-by-step setup instructions |
+| `user_manual.md` | How to use the application |
+| `api_documentation.md` | API endpoints and usage |
+| `deployment_guide.md` | How to deploy the app to production |
+| `project_documentation.md` | Full project overview and design |
+| `testing_report.md` | Testing methodology and results |
+
+## 🖼️ Screenshots
+
+Screenshots of the application are available in the [`screenshots/`](screenshots/) folder:
+
+| Screenshot | Description |
+|------------|--------------|
+| ![Login Page](screenshots/login_page.png) | Login page |
+| ![Registration Page](screenshots/registration_page.png) | Registration page |
+| ![Dashboard](screenshots/dashboard.png) | Dashboard |
+| ![Fake Prediction Result](screenshots/fake_result.png) | Fake prediction result |
+| ![Genuine Prediction Result](screenshots/genuine_result.png) | Genuine prediction result |
+| ![Analytics Reports](screenshots/analytics_reports.png) | Analytics reports |
+| ![CSV/JSON Export](screenshots/export.png) | CSV/JSON export |
+
+> Update the image filenames above to match the actual files in your `screenshots/` folder.
+
+## 📈 Results
+
+The Random Forest Classifier model was trained and evaluated on the labeled `social_media_profiles.csv` dataset, achieving strong performance in distinguishing genuine profiles from fake/bot accounts. Key highlights:
+
+- High accuracy in classifying fake vs. genuine profiles
+- Detailed evaluation metrics (accuracy, precision, recall, F1-score) available in [`docs/testing_report.md`](docs/testing_report.md)
+- Model performance validated through cross-validation on the training dataset
+
+> Add your specific accuracy/precision/recall numbers here once finalized for a stronger, data-backed README.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
 
 ## 📄 License
 
-This project is developed for educational and academic purposes.
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/LogapriyaMahendran/fake-profile-detection-system-.git
-```
-
-### Navigate to the Project
-
-```bash
-cd fake-profile-detection-system-
-```
-
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Run the Application
-
-```bash
-python app.py
-```
-
-Open your browser and visit:
-
-```
-http://127.0.0.1:5000
-```
-
-| Category | Technology |
-|----------|------------|
-| Programming Language | Python |
-| Backend | Flask |
-| Frontend | HTML, CSS, Bootstrap 5, JavaScript |
-| Machine Learning | Scikit-learn (Random Forest) |
-| Database | MySQL / SQLite |
-| Data Visualization | Chart.js |
-| Version Control | Git & GitHub |
-
-- 🔍 Detects Fake and Genuine Social Media Profiles
-- 🤖 Machine Learning Prediction using Random Forest
-- 👤 User Registration and Login System
-- 🔐 Separate Admin Login and Dashboard
-- 📊 Interactive Analytics Dashboard with Charts
-- 📁 Prediction History and Reports
-- 💾 MySQL Database Integration
-- 🌐 Responsive Web Interface using Bootstrap 5
-
-- **Algorithm:** Random Forest Classifier
-- **Accuracy:** **97.08%**
-
-This repository contains the complete production-ready source code and technical documentation for the **Intelligent Fake Social Media Profile Detection System Using Machine Learning**.
-
-The application utilizes a **Random Forest Classifier** trained on account behavior parameters to classify profiles as **Fake** or **Genuine** in real time. It is built using Python Flask, Bootstrap 5, Chart.js, and SQLAlchemy (supporting MySQL/SQLite).
-
----
-
-## 📂 Project Directory Structure
-
-```
-├── app.py                      # Main Flask server entry point (routes, Auth, APIs)
-├── config.py                   # Configuration parameters (Database, Upload folders)
-├── database.sql                # Production MySQL tables schema and sample records
-├── train_model.py              # Script to generate synthetic dataset & train initial Random Forest
-├── requirements.txt            # Python environment dependencies list
-├── social_media_profiles.csv   # Dataset used for initial training and testing
-├── models/
-│   ├── fake_profile_model.pkl  # Serialized Random Forest Classifier binary
-│   ├── scaler.pkl              # Scaler parameters for numeric input normalization
-│   └── model_metadata.json     # Accuracy rates, confusion matrix & feature importances
-├── static/
-│   ├── css/
-│   │   └── style.css           # Premium custom stylesheets (Dark Mode, glassmorphism, animations)
-│   └── js/
-│       └── main.js             # Form validation, predictions Ajax, and Chart.js rendering
-├── templates/
-│   ├── base.html               # Base layout shell (Includes sidebar navigation and top bar)
-│   ├── index.html              # Landing home page
-│   ├── login.html              # User login screen
-│   ├── register.html           # User registration screen
-│   ├── admin_login.html        # Separate admin portal login
-│   ├── user_dashboard.html     # Predict profile inputs form and user prediction log
-│   ├── admin_dashboard.html    # Admin management panel (charts, retraining logs, logins log)
-│   ├── profile.html            # Settings (Manage profile credentials & passwords)
-│   └── reports.html            # System analytical reports & logs exports
-└── docs/                       # Project Documentation Folder
-    ├── README.md               # Main documentation router
-    ├── installation_guide.md   # Step-by-step local workspace setup instructions
-    ├── user_manual.md          # Guides for operating the application features
-    ├── api_documentation.md    # Restful web services details
-    ├── testing_report.md       # Quality assurance results and test cases matrix
-    ├── deployment_guide.md      # Deployment guidelines for cloud servers
-    ├── project_documentation.md # Detailed college project report document
-    └── diagrams/               # Software Engineering Mermaid flow diagrams
-```
-
----
-
-## 📖 Complete Documentation Suite
-
-For comprehensive project guides, refer to the following documentation files:
-
-1. ⚙️ **[Installation Guide](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/installation_guide.md)** - Learn how to set up Python, install dependencies, load databases, and run the server.
-2. 📘 **[User Manual](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/user_manual.md)** - High-level operational walk-throughs for users and admins.
-3. 🌐 **[API Documentation](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/api_documentation.md)** - Details on routes, requests, responses, and parameters.
-4. 🧪 **[Testing Report](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/testing_report.md)** - Review unit, integration, and black/white box verification reports.
-5. 🚀 **[Deployment Guide](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/deployment_guide.md)** - How to deploy the application on production-grade systems.
-6. 📝 **[Project Documentation](file:///c:/Users/M.Logapriya/OneDrive/Documents/Desktop/fakeprofile%20detection%201/docs/project_documentation.md)** - Academic documentation (Abstract, Introduction, Scope, Methodology, Diagrams, and Conclusion).
-## ⭐ Support
-
-If you found this project useful, please consider giving it a ⭐ on GitHub.
-
----
-
-## 📬 Contact
-
-**Author:** M. Logapriya
-
-- GitHub: https://github.com/LogapriyaMahendran
-- Email: logapriya13783@gmail.com
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
