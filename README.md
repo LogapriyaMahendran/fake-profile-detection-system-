@@ -1,4 +1,16 @@
-# Fake Profile Detection
+<div align="center">
+  <img src="screenshots/logo.png" alt="Fake Profile Detection System Logo" width="200"/>
+  
+  # 🕵️ Fake Profile Detection System
+  
+  ### ML-powered web app to detect fake social media profiles
+  
+  ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+  ![Flask](https://img.shields.io/badge/Flask-Framework-black?logo=flask)
+  ![License](https://img.shields.io/badge/License-MIT-green)
+  ![Status](https://img.shields.io/badge/Status-Live-success)
+  
+</div>
 
 An ML-powered web application that detects fake/bot social media profiles using machine learning, built with Python and Flask.
 
