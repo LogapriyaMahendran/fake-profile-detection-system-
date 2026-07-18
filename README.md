@@ -168,3 +168,10 @@ Contributions are welcome! Please fork the repository, create a feature branch, 
 ## 📄 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Logapriya M**
+
+- **GitHub:** [LogapriyaMahendran](https://github.com/LogapriyaMahendran)
+- **Project:** [Fake Profile Detection System](https://github.com/LogapriyaMahendran/fake-profile-detection-system-)
