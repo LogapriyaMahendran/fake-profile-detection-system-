@@ -1,0 +1,19 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Fake Profile Detection System logo</title>
+<desc>A shield with a magnifying glass over a user silhouette, representing profile verification</desc>
+<circle cx="120" cy="120" r="118" fill="#0f172a"/>
+<circle cx="120" cy="120" r="118" fill="none" stroke="#2563eb" stroke-width="3"/>
+
+<path d="M120 46 L172 66 L172 118 C172 158 150 186 120 198 C90 186 68 158 68 118 L68 66 Z" fill="#1e293b" stroke="#3b82f6" stroke-width="3"/>
+
+<circle cx="112" cy="104" r="24" fill="none" stroke="#e2e8f0" stroke-width="4"/>
+<circle cx="112" cy="104" r="24" fill="#334155" fill-opacity="0.3"/>
+
+<circle cx="112" cy="99" r="8" fill="#94a3b8"/>
+<path d="M96 122 C96 111 103 106 112 106 C121 106 128 111 128 122" fill="#94a3b8"/>
+
+<line x1="129" y1="121" x2="150" y2="142" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/>
+
+<circle cx="150" cy="142" r="7" fill="#22c55e"/>
+<path d="M146 142 L149 145 L155 138" fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
